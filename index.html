@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div>
+        <div class="nav">
+            <label for="">Buscar:</label>
+            <input type="text" id="buscart">
+            <button id="buscar">Agregar</button>
+        </div>
+        <hr>
+        <div class="add">
+            <label for="t">Titulo:</label>
+            <input maxlength="50" type="text" name="t" placeholder="Tarea 1" id="titulo">
+            <br>
+            <label for="d">Descripcion:</label>
+            <textarea maxlength="150" name="d" id="descripcion" placeholder="Descripcion de tarea 1" ></textarea>
+            <br>
+            <button id="enviar" value="">Agregar</button>
+        </div>
+        <hr>
+        <div id="items">
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
