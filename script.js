@@ -7,14 +7,16 @@ let divItems = document.getElementById("items");
 let lista = localStorage.getItem("lista") != null? JSON.parse(localStorage.getItem("lista")) : [];
 let id = localStorage.getItem("id") != null? Number(localStorage.getItem("id")) : 0;
 
-MostrarLista(lista);
+MostrarLista(lista);   
 
+//Guarda los datos en el Local Storage
 function GuardarDatos()
 {
     localStorage.setItem("lista", JSON.stringify(lista));
     localStorage.setItem("id",id);
 }
 
+//Valida los datos cuando crear una tarea
 function Validar() {
     let mensaje = "";
     if(inpT.value == null || inpT.value.trim() == "")
@@ -37,12 +39,15 @@ function Validar() {
     return true;
 }
 
+//Busca la tarea que contenga el texto que le mandes
 function Buscar(texto) {
     const nuevalista = 
         lista.filter(x => x.titulo.trim().toUpperCase().includes(texto.trim().toUpperCase()));
     MostrarLista(nuevalista);
 }
 
+//Se encarga tomar los datos de los inputs (titulu y descripcion) y crea la tarea
+//en el apartado visual y en el Local Storage
 function AgregarTarea(){
     if(!Validar())
     {
@@ -58,8 +63,12 @@ function AgregarTarea(){
     id += 1;
     GuardarDatos();
     divItems.appendChild(CrearComponente(tarea));
+    inpT.value = "";
+    inpD.value = "";
 }
 
+//Introduces la clase tarea que se saca del Local Storage y te devuelve el componente
+//de la misma, con los botones funcionando y demas
 function CrearComponente(tarea)
 {
     let vista = document.createElement("div");
@@ -77,49 +86,81 @@ function CrearComponente(tarea)
 
     eliminar.textContent = "Eliminar";
     eliminar.onclick = () =>{
-        EliminarTarea(divItems,vista, tarea.id)
+        EliminarTarea(divItems,vista)
     };
+    eliminar.classList.add("delete-button")
     abajo.appendChild(eliminar);
 
     if(!tarea.completa)
     {
-        terminar.value = tarea.id;
         terminar.textContent = "Terminar";  
+        terminar.id = "BTT" + tarea.id;
+        terminar.onclick = () => {
+            CompletarTarea(vista)        
+        };
+        terminar.classList.add("complete-button")
         abajo.appendChild(terminar);
     }
-    
+
+    arriba.id = "SectionU" + tarea.id;
+    arriba.classList.add("section-up");
+
+    abajo.id = "SectionD" + tarea.id;
+    abajo.classList.add("section-down");
+
     vista.append(arriba,abajo);
+    vista.classList.add("task-card");
     return vista;    
 }
 
-function EliminarTarea(div, element, id)
+//Se encarga de eliminar la tarea de la parte visual y el Local Storage, el div es el divItems
+//para poder saber el padre de la card, que es el componente creado de la tarea de ahi sacaremos 
+//el elemento HTML para eliminar del padre (div) y el id de la tarea
+function EliminarTarea(div, card)
 {
     if(confirm("Estas seguro de eliminar esta tarea?"))
     {
+        let id = Number(card.id.replace("div",""));
         let index = lista.findIndex(x => x.id == id);
         if(index != null)
         {
             lista.splice(index,1);
             GuardarDatos();
         }       
-        div.removeChild(element);
+        div.removeChild(card);
     }
 }
 
-function CompletarTarea(div, id)
+//Te completa la tarea tanto en el Local Storage como en el apartado visual, la card es el componente,
+//se nececita para poder cambiarle su clase, y tomar su ID para los cambios.
+function CompletarTarea(card)
 {
-    
+    let id = Number(card.id.replace("div",""));
+    let cardsection = document.getElementById("SectionD"+id);
+    let botonterminar = document.getElementById("BTT"+id);
+    if(confirm("Estas seguro que la completaste?"))
+    {        
+        let index = lista.findIndex(x => x.id == id);
+        if(index != null)
+        {
+            lista[index].completa = true;
+            cardsection.removeChild(botonterminar);
+            GuardarDatos();
+        }
+    }
 }
 
+//Simplemente crea todos los componentes en base a tu datos del Local Storage, se ejecuta recien se abre la web
 function MostrarLista(lista){
     divItems.innerHTML = '';
+    divItems.classList.add("box-items")
     lista.forEach((x) => {
         divItems.appendChild(CrearComponente(x));
     });
 }
 
 enviarbtn.addEventListener("click",() => {
-    AgregarTarea();
+    AgregarTarea();    
 })
 
 buscarbtn.addEventListener("click", () =>{
