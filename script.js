@@ -2,8 +2,10 @@ let inpB = document.getElementById("buscart");
 let buscarbtn = document.getElementById("buscar");
 let inpT = document.getElementById("titulo");
 let inpD = document.getElementById("descripcion");
+let mostarbtn = document.getElementById("agregar");
 let enviarbtn = document.getElementById("enviar");
 let divItems = document.getElementById("items");
+let menuAdd = document.getElementById("menu-add");
 let lista = localStorage.getItem("lista") != null? JSON.parse(localStorage.getItem("lista")) : [];
 let id = localStorage.getItem("id") != null? Number(localStorage.getItem("id")) : 0;
 
@@ -65,6 +67,7 @@ function AgregarTarea(){
     divItems.appendChild(CrearComponente(tarea));
     inpT.value = "";
     inpD.value = "";
+    OcultarMenu();
 }
 
 //Introduces la clase tarea que se saca del Local Storage y te devuelve el componente
@@ -100,6 +103,9 @@ function CrearComponente(tarea)
         };
         terminar.classList.add("complete-button")
         abajo.appendChild(terminar);
+    }
+    else{        
+        vista.classList.add("complete-card")
     }
 
     arriba.id = "SectionU" + tarea.id;
@@ -147,6 +153,7 @@ function CompletarTarea(card)
             cardsection.removeChild(botonterminar);
             GuardarDatos();
         }
+        card.classList.add("complete-card");
     }
 }
 
@@ -159,10 +166,44 @@ function MostrarLista(lista){
     });
 }
 
+function MostrarMenu(){
+    menuAdd.classList.remove("oculto");
+    menuAdd.classList.add("mostrar");
+}
+
+function OcultarMenu(){
+    menuAdd.classList.remove("mostrar");
+    menuAdd.classList.add("oculto");
+}
+
 enviarbtn.addEventListener("click",() => {
     AgregarTarea();    
 })
 
 buscarbtn.addEventListener("click", () =>{
     Buscar(inpB.value);
+})
+
+inpB.addEventListener("keydown", (event) =>{
+    if(event.key == "Enter")
+    {
+        Buscar(inpB.value)
+    }
+})
+
+inpT.addEventListener("keydown", (event) =>{
+    if(event.key == "Enter")
+    {
+        AgregarTarea()
+    }
+})
+
+mostarbtn.addEventListener("click", () =>{
+    if(menuAdd.classList.contains("oculto"))
+    {
+        MostrarMenu();
+    } else
+    {
+        OcultarMenu();
+    }
 })

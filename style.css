@@ -1,37 +1,132 @@
 :root{
-    --page-color: #ffffff;
-    --tittle-color: #3000c1;
-    --description-color: #000000;
+    --page-color: #B9D6F2;   
+    --primary-color: #5E95CB;
+    --second-color: #306DA5;    
+    --tercy-color: #2500de;
+    --details-color: #0099ff;
     --border-color: #000000;
-    --button-delete: #dc143c;
-    --button-complete: #59ff3b;
+    --add-color: #169c71;
+    --delete-color: #c90000;
 }
 
 *{
     margin: 0;
     padding: 0;
-} 
+    background-color: var(--page-color);
+    box-sizing: border-box;
+}
+
+.nav{
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+}
+
+.nav input{
+    padding: 5px;
+}
+
+.nav *{
+    margin: 5px;
+}
+
+.menu-add *{
+    margin: 5px;
+    background-color: var(--primary-color);
+}
+
+button:hover{
+    cursor: pointer;;
+}
+
+.button-search{
+    border: 2px solid var(--border-color);
+    border-radius: 5px;
+    padding: 5px;
+    background-color: var(--tercy-color);
+}
+
+.button-add{
+    border: 2px solid var(--border-color);
+    border-radius: 5px;
+    padding: 5px;
+    background-color: var(--add-color);
+}
+
+.oculto{
+    display: none;
+}
+
+.mostrar{
+    max-height: 400px; 
+}
+
+.menu-add{
+    padding: 5px;
+    background-color: var(--primary-color);
+    text-align: center;
+    width: 400px;
+    border: 2px solid var(--border-color);;
+    border-radius: 15px;
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.menu-add input{
+    width: 80%;
+    padding: 5px;
+    background-color: var(--page-color);
+    border: 2px solid var(--tercy-color);
+}
+
+.menu-add textarea{
+    background-color: var(--page-color);
+    border: 2px solid var(--tercy-color);
+    height: 200px;
+    max-height: 250px;
+    width: 80%;
+    padding: 5px;
+    max-width: 80%;
+    min-width: 80%;
+    min-height: 100px;
+}
 
 .box-items{
     display: flex;
+    flex-wrap: wrap;    
+    justify-content: space-evenly;
     margin: 10px;
+    max-width: 100%;
 }
 
-.task-card{
-    
-    width: 300px;
-    height: 200px;
+.task-card{    
+    width: 200px;
+    min-height: 200px;
     border: 2px solid var(--border-color);
+    border-radius: 15px;
     margin: 10px;
     padding: 5px;
 }   
 
 .task-card h3{
-    color: var(--tittle-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .task-card p{
-    color: var(--description-color)
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.complete-card{
+    background-color: var(--details-color);
+}
+
+.complete-card *{
+    background-color: var(--details-color);
 }
 
 .section-up{
@@ -50,10 +145,10 @@
 }
 
 .complete-button{
-    border: 2px solid var(--description-color);
+    border: 2px solid var(--border-color);
     border-radius: 10px;
     padding: 5px;
-    background-color: var(--button-complete);
+    background-color: var(--details-color);
 }
 
 .complete-button:hover{
@@ -61,10 +156,10 @@
 }
 
 .delete-button{
-    border: 2px solid var(--description-color);
+    border: 2px solid var(--border-color);
     border-radius: 10px;
     padding: 5px;
-    background-color: var(--button-delete);
+    background-color: var(--delete-color);
 }
 
 .delete-button:hover{
