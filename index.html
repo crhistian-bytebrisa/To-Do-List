@@ -12,9 +12,15 @@
             <label for="">Buscar:</label>
             <br>
             <input type="text" id="buscart">
-            <button id="buscar" class="button-search">Buscar</button>
+            <select name="" id="filtro">
+                <option value="Todas">Todas</option>
+                <option value="Pendientes">Pendientes</option>
+                <option value="Completas">Completas</option>
+            </select>
             <br>
-            <button id="agregar" class="button-add">Agregar</button>
+            <button id="agregar" class="add-button">Agregar</button>
+            <br>
+            <p>Cantidad de pendientes: </p><p id="conteo" class=""></p>
         </div>
         <div class="add menu-add oculto" id="menu-add">
             <label for="t">Titulo:</label>
@@ -25,7 +31,8 @@
             <br>
             <textarea maxlength="150" name="d" id="descripcion" placeholder="Descripcion" ></textarea>
             <br>
-            <button id="enviar" class="button-add" value="">Agregar</button>
+            <button id="salir" class="delete-button">Salir</button>
+            <button id="enviar" class="add-button" value="">Agregar</button>
         </div>
         <hr>
         <div id="items">

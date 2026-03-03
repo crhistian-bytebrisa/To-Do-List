@@ -1,21 +1,29 @@
 let inpB = document.getElementById("buscart");
-let buscarbtn = document.getElementById("buscar");
+let select = document.getElementById("filtro");
 let inpT = document.getElementById("titulo");
 let inpD = document.getElementById("descripcion");
 let mostarbtn = document.getElementById("agregar");
 let enviarbtn = document.getElementById("enviar");
+let salirbtn = document.getElementById("salir");
 let divItems = document.getElementById("items");
 let menuAdd = document.getElementById("menu-add");
+let conteo = document.getElementById("conteo");
 let lista = localStorage.getItem("lista") != null? JSON.parse(localStorage.getItem("lista")) : [];
 let id = localStorage.getItem("id") != null? Number(localStorage.getItem("id")) : 0;
+let listaActual = lista;
 
-MostrarLista(lista);   
+MostrarLista();   
 
 //Guarda los datos en el Local Storage
 function GuardarDatos()
 {
     localStorage.setItem("lista", JSON.stringify(lista));
     localStorage.setItem("id",id);
+}
+
+function Contador(){
+    let pendientes = lista.filter(x => x.completa === false);
+    conteo.textContent = pendientes.length;
 }
 
 //Valida los datos cuando crear una tarea
@@ -42,10 +50,25 @@ function Validar() {
 }
 
 //Busca la tarea que contenga el texto que le mandes
-function Buscar(texto) {
-    const nuevalista = 
-        lista.filter(x => x.titulo.trim().toUpperCase().includes(texto.trim().toUpperCase()));
-    MostrarLista(nuevalista);
+function Buscar() {
+    let texto = inpB.value;
+    let filtro = select.value;
+    NuevaLista = lista.filter(x => x.titulo.trim().toUpperCase().includes(texto.trim().toUpperCase()));
+
+    if(filtro === "Todas")
+    {
+        listaActual = NuevaLista;
+    }
+    if(filtro === "Pendientes")
+    {
+        listaActual = NuevaLista.filter(x => x.completa === false);    
+    }
+    if(filtro === "Completas")
+    {
+        listaActual = NuevaLista.filter(x => x.completa === true);    
+    }   
+
+    MostrarLista();
 }
 
 //Se encarga tomar los datos de los inputs (titulu y descripcion) y crea la tarea
@@ -68,6 +91,8 @@ function AgregarTarea(){
     inpT.value = "";
     inpD.value = "";
     OcultarMenu();
+    Buscar();
+    Contador();
 }
 
 //Introduces la clase tarea que se saca del Local Storage y te devuelve el componente
@@ -154,16 +179,18 @@ function CompletarTarea(card)
             GuardarDatos();
         }
         card.classList.add("complete-card");
+        Contador();
     }
 }
 
 //Simplemente crea todos los componentes en base a tu datos del Local Storage, se ejecuta recien se abre la web
-function MostrarLista(lista){
+function MostrarLista(){
     divItems.innerHTML = '';
     divItems.classList.add("box-items")
-    lista.forEach((x) => {
+    listaActual.forEach((x) => {
         divItems.appendChild(CrearComponente(x));
     });
+    Contador();
 }
 
 function MostrarMenu(){
@@ -180,15 +207,8 @@ enviarbtn.addEventListener("click",() => {
     AgregarTarea();    
 })
 
-buscarbtn.addEventListener("click", () =>{
-    Buscar(inpB.value);
-})
-
-inpB.addEventListener("keydown", (event) =>{
-    if(event.key == "Enter")
-    {
-        Buscar(inpB.value)
-    }
+inpB.addEventListener("input", () =>{
+    Buscar();
 })
 
 inpT.addEventListener("keydown", (event) =>{
@@ -204,6 +224,18 @@ mostarbtn.addEventListener("click", () =>{
         MostrarMenu();
     } else
     {
+        inpT.value = "";
+        inpD.value = "";
         OcultarMenu();
     }
+})
+
+salirbtn.addEventListener("click", () =>{
+    inpT.value = "";
+    inpD.value = "";
+    OcultarMenu();
+})
+
+select.addEventListener("change", () =>{
+    Buscar();
 })

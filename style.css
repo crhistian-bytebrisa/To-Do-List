@@ -16,6 +16,10 @@
     box-sizing: border-box;
 }
 
+.conteo{    
+    color: var(--tercy-color);
+}
+
 .nav{
     align-items: center;
     text-align: center;
@@ -23,6 +27,10 @@
 }
 
 .nav input{
+    padding: 5px;
+}
+
+.nav select{
     padding: 5px;
 }
 
@@ -39,14 +47,14 @@ button:hover{
     cursor: pointer;;
 }
 
-.button-search{
+.search-button{
     border: 2px solid var(--border-color);
     border-radius: 5px;
     padding: 5px;
     background-color: var(--tercy-color);
 }
 
-.button-add{
+.add-button{
     border: 2px solid var(--border-color);
     border-radius: 5px;
     padding: 5px;
