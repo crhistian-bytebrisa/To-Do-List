@@ -224,3 +224,9 @@ button:hover{
     height: 30px;
     color: var(--border-color);
 }
+
+@media (max-width: 600px) {
+    .mode{
+        top: 100px;
+    }
+}
