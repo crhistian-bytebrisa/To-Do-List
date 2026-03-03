@@ -49,11 +49,11 @@ function Validar() {
     return true;
 }
 
-//Busca la tarea que contenga el texto que le mandes
+//Busca la tarea que contenga el texto que esta en el input, ademas de filtrar mediante el select
 function Buscar() {
     let texto = inpB.value;
     let filtro = select.value;
-    NuevaLista = lista.filter(x => x.titulo.trim().toUpperCase().includes(texto.trim().toUpperCase()));
+    let NuevaLista = lista.filter(x => x.titulo.trim().toUpperCase().includes(texto.trim().toUpperCase()));
 
     if(filtro === "Todas")
     {
@@ -119,17 +119,20 @@ function CrearComponente(tarea)
     eliminar.classList.add("delete-button")
     abajo.appendChild(eliminar);
 
-    if(!tarea.completa)
+    let checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = tarea.completa;
+    checkbox.name = "complete"
+
+    checkbox.addEventListener("change", () => {
+        CompletarTarea(tarea.id, checkbox.checked, vista);
+    });
+
+    
+    abajo.appendChild(checkbox);
+
+    if(tarea.completa)
     {
-        terminar.textContent = "Terminar";  
-        terminar.id = "BTT" + tarea.id;
-        terminar.onclick = () => {
-            CompletarTarea(vista)        
-        };
-        terminar.classList.add("complete-button")
-        abajo.appendChild(terminar);
-    }
-    else{        
         vista.classList.add("complete-card")
     }
 
@@ -162,25 +165,25 @@ function EliminarTarea(div, card)
     }
 }
 
-//Te completa la tarea tanto en el Local Storage como en el apartado visual, la card es el componente,
-//se nececita para poder cambiarle su clase, y tomar su ID para los cambios.
-function CompletarTarea(card)
+function CompletarTarea(id, estado, card)
 {
-    let id = Number(card.id.replace("div",""));
-    let cardsection = document.getElementById("SectionD"+id);
-    let botonterminar = document.getElementById("BTT"+id);
-    if(confirm("Estas seguro que la completaste?"))
-    {        
-        let index = lista.findIndex(x => x.id == id);
-        if(index != null)
-        {
-            lista[index].completa = true;
-            cardsection.removeChild(botonterminar);
-            GuardarDatos();
-        }
-        card.classList.add("complete-card");
-        Contador();
+    let index = lista.findIndex(x => x.id === id);
+    if(index !== -1)
+    {
+        lista[index].completa = estado;
+        GuardarDatos();
     }
+
+    if(estado)
+    {
+        card.classList.add("complete-card");
+    }
+    else
+    {
+        card.classList.remove("complete-card");
+    }
+
+    Contador();
 }
 
 //Simplemente crea todos los componentes en base a tu datos del Local Storage, se ejecuta recien se abre la web
@@ -239,3 +242,35 @@ salirbtn.addEventListener("click", () =>{
 select.addEventListener("change", () =>{
     Buscar();
 })
+
+
+//Logica de modo oscuro
+import {moon, sun} from "./svgscript.js";
+const modebutton = document.getElementById('dark');
+const logo_darkmode = document.getElementById('svgcontainer');
+let tema = localStorage.getItem("tema");
+
+function setDarkTheme(isDark)
+{            
+    tema = isDark? "dark" : "light";
+    localStorage.setItem("tema",tema);    
+    logo_darkmode.innerHTML = isDark ? sun : moon;
+    document.documentElement.classList.toggle("dark");
+}
+
+if (tema === "dark") {
+    setDarkTheme(true);
+} else {
+    setDarkTheme(false);
+}
+
+modebutton.addEventListener("click", () => {  
+    if(document.documentElement.classList.contains("dark"))
+    {
+        setDarkTheme(false);
+    }
+    else
+    {
+        setDarkTheme(true);
+    }
+});

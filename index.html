@@ -8,6 +8,9 @@
 </head>
 <body>
     <div>
+        <div class="mode" id="dark">            
+            <div id="svgcontainer"></div>
+        </div>
         <div class="nav">
             <label for="">Buscar:</label>
             <br>
@@ -20,7 +23,8 @@
             <br>
             <button id="agregar" class="add-button">Agregar</button>
             <br>
-            <p>Cantidad de pendientes: </p><p id="conteo" class=""></p>
+            <p>Cantidad de pendientes: </p><p id="conteo" class=""></p>          
+
         </div>
         <div class="add menu-add oculto" id="menu-add">
             <label for="t">Titulo:</label>
@@ -38,6 +42,6 @@
         <div id="items">
         </div>
     </div>
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>

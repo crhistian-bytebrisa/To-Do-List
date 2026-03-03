@@ -9,11 +9,23 @@
     --delete-color: #c90000;
 }
 
+:root.dark {
+    --page-color: #0F1A26;        
+    --primary-color: #3F7FBF;     
+    --second-color: #2B5D8A;      
+    --tercy-color: #6A5CFF;      
+    --details-color: #4DB8FF;    
+    --border-color: #E6EDF3;     
+    --add-color: #2ECC9A;         
+    --delete-color: #FF4D4D;      
+}
+
 *{
     margin: 0;
     padding: 0;
     background-color: var(--page-color);
     box-sizing: border-box;
+    color: var(--border-color);
 }
 
 .conteo{    
@@ -27,6 +39,7 @@
 }
 
 .nav input{
+    border: 2px solid var(--border-color);
     padding: 5px;
 }
 
@@ -40,7 +53,7 @@
 
 .menu-add *{
     margin: 5px;
-    background-color: var(--primary-color);
+    background-color: var(--page-color);
 }
 
 button:hover{
@@ -71,7 +84,7 @@ button:hover{
 
 .menu-add{
     padding: 5px;
-    background-color: var(--primary-color);
+    background-color: var(--page-color);
     text-align: center;
     width: 300px;
     min-width: 200px;
@@ -112,13 +125,18 @@ button:hover{
 }
 
 .task-card{    
-    width: 200px;
+    width: 300px;
     min-height: 200px;
     border: 2px solid var(--border-color);
+    background-color: var(--details-color);
     border-radius: 15px;
     margin: 10px;
     padding: 5px;
 }   
+
+.task-card *{
+    background-color: var(--details-color);
+}
 
 .task-card h3{
     word-wrap: break-word;
@@ -130,12 +148,17 @@ button:hover{
     overflow-wrap: break-word;
 }
 
+.task-card input[type="checkbox"]{
+    width: 24px;
+    height: 24px;
+}
+
 .complete-card{
-    background-color: var(--details-color);
+    background-color: var(--page-color);
 }
 
 .complete-card *{
-    background-color: var(--details-color);
+    background-color: var(--page-color);
 }
 
 .section-up{
@@ -158,6 +181,7 @@ button:hover{
     border-radius: 10px;
     padding: 5px;
     background-color: var(--details-color);
+    
 }
 
 .complete-button:hover{
@@ -173,4 +197,28 @@ button:hover{
 
 .delete-button:hover{
     cursor: pointer;
+}
+
+
+/*Seccion de modo oscuro, codigo reciclado de anterior trabajo*/
+.mode{
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-750%);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.mode :hover{
+    cursor: pointer;
+}
+
+#svg{       
+    margin: auto;
+    display: block;
+    width: 30px;
+    height: 30px;
+    color: var(--border-color);
 }
