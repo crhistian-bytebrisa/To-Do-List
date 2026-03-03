@@ -201,15 +201,17 @@ button:hover{
 
 
 /*Seccion de modo oscuro, codigo reciclado de anterior trabajo*/
+
 .mode{
-    position: absolute;
+    position: fixed;
+    top: 20px;
     right: 20px;
-    top: 50%;
-    transform: translateY(-750%);
     border: 1px solid var(--border-color);
     border-radius: 5px;
     padding: 5px;
+    z-index: 1000;
 }
+
 
 .mode :hover{
     cursor: pointer;
